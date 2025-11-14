@@ -1,12 +1,106 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fishcold0 html</title>
-    <link rel="stylesheet" href="style.css">
+    <title>🐕妙麗歲數計算機</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 320px;
+        }
+        input[type="date"] {
+            padding: 10px;
+            width: 80%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: #ff6b6b;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff4c4c;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .source {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        .source a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello world!</h1>
+    <div class="container">
+        <h2>🐕妙麗歲數計算機</h2>
+        <p>請輸入妙麗的出生日期：</p>
+        <input type="date" id="birthDate">
+        <br>
+        <button onclick="calculateAge()">開始計算</button>
+        <div class="result" id="result"></div>
+        <div class="source">
+            資料來源：<a href="https://pansci.asia/archives/174178" target="_blank">想知道狗狗的年紀嗎？現在有更科學的算法啦！</a>
+        </div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const birthDateInput = document.getElementById("birthDate").value;
+            if (!birthDateInput) {
+                alert("請輸入出生日期！");
+                return;
+            }
+
+            const birthDate = new Date(birthDateInput);
+            const today = new Date();
+
+            // 計算狗狗年齡（精確到小數點1位）
+            const diffTime = today - birthDate; // 毫秒差
+            const diffDays = diffTime / (1000 * 60 * 60 * 24); // 轉換成天
+            const dogAge = diffDays / 365.25; // 年齡（包含小數）
+
+            if (dogAge < 1) {
+                alert("此公式僅適用一歲以上的狗！");
+                return;
+            }
+
+            const dogAgeRounded = dogAge.toFixed(1);
+
+            // 換算成人類年齡
+            const humanAge = 16 * Math.log(dogAge) + 31;
+
+            // 顯示結果
+            document.getElementById("result").innerHTML = `
+                妙麗的狗狗年齡為：<b>${dogAgeRounded}</b> 歲<br>
+                換算成人類年齡為：<b>${humanAge.toFixed(1)}</b> 歲
+            `;
+        }
+    </script>
 </body>
 </html>
